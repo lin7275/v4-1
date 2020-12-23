@@ -1,0 +1,47 @@
+XvectorSeq(
+  (frame_layers): Sequential(
+    (0): Fbank(
+      (MelSpectrogram): MelSpectrogram(
+        (spectrogram): Spectrogram()
+        (mel_scale): MelScale()
+      )
+    )
+    (1): SpectrumAug(
+      (freq_masker): FrequencyMasking()
+      (time_masker): TimeMasking()
+    )
+    (2): Sequential(
+      (0): Conv1d(80, 512, kernel_size=(5,), stride=(1,))
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (3): Sequential(
+      (0): Conv1d(512, 512, kernel_size=(3,), stride=(1,), dilation=(2,))
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (4): Sequential(
+      (0): Conv1d(512, 512, kernel_size=(3,), stride=(1,), dilation=(3,))
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (5): Sequential(
+      (0): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (6): Sequential(
+      (0): Conv1d(512, 1500, kernel_size=(1,), stride=(1,))
+      (1): BatchNorm1d(1500, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+  )
+  (utt_layers): Sequential(
+    (0): Linear(in_features=3000, out_features=512, bias=True)
+    (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Linear(in_features=512, out_features=128, bias=True)
+  )
+  (am_linear): AMLinear()
+  (stats_pooling): StatsPooling()
+)

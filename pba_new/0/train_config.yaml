@@ -1,0 +1,42 @@
+aug_config:
+  music_p: 0.2542473664939445
+  music_snrs: 3
+  noises_p: 0.13378519362808136
+  noises_snrs: 7
+  overlap_p: 0.24019112220126962
+  overlap_snrs: 10
+  reverb_p: 0.25535388258061986
+  spec_aug_freq_mask_size: 10
+  spec_aug_time_mask_size: 5
+batch_size: 64
+checkpoint_interval: 40
+gpu_ids:
+- 0
+lr: 0.01
+min_duration: 4.1
+min_utts_per_spk: 3
+model_config:
+  model: Xvector
+n_epoch: 400
+n_process: 2
+noise_dir: /home8a/mwmak/corpus/musan_segmented
+optimizer_choice: sgd
+process_rank: '0'
+project_dir: pba_new/0
+sample_length_range:
+- 64000
+- 64001
+sample_per_epoch: 120000
+scheduler: CosineAnnealingWarmRestarts
+scheduler_config:
+  T_0: 200
+  T_mult: 1
+start_epoch: 79
+valid_test: /home8a/mwmak/corpus/voice19/v19-dev
+valid_trial_list: /home8a/mwmak/corpus/voice19_dev.tsv
+wav_dirs:
+- /home8a/mwmak/corpus/vox1_fixed/dev
+- /home8a/mwmak/corpus/vox2_wav/dev
+- /home8a/mwmak/corpus/vox2_wav/test
+weight_decay: 0.001
+world_size: 1

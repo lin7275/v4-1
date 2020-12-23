@@ -1,0 +1,58 @@
+
+
+# It is important that all prepared data are under datadir/ such as /home8a/wwlin/corpus
+# step 1 convert m4a to wav and concat wav
+data_dir=/home8a/wwlin/corpus
+cp -r path2vox1 $data_dir/vox1_fix
+cp -r path2voice19 $data_dir/voice19
+python3 huawei/tools/vox_wav_tools.py --func m4a2wav --read_dir path2vox2m4a--save2 $data_dir/vox2_wav
+python3 huawei/tools/vox_wav_tools.py --func concat --read_dir $data_dir/vox1_fix --save2 $data_dir/vox1_concat
+python3 huawei/tools/vox_wav_tools.py --func concat --read_dir $data_dir/vox2_wav --save2 $data_dir/vox2_concat
+
+# step 2
+# 2.1 prepare wav info
+python3 huawei/tools/prepare_data.py --dataset voice19-dev --dataset_dir $data_dir/voice19/v19-dev
+python3 huawei/tools/prepare_data.py --dataset voice19-eval --dataset_dir $data_dir/voice19/v19-eval
+python3 huawei/tools/prepare_data.py --dataset vox --dataset_dir $data_dir/vox1_fixed/test
+python3 huawei/tools/prepare_data.py --dataset vox --dataset_dir $data_dir/vox1_fixed/dev
+python3 huawei/tools/prepare_data.py --dataset vox --dataset_dir $data_dir/vox2_wav/dev
+python3 huawei/tools/prepare_data.py --dataset vox --dataset_dir $data_dir/vox2_wav/test
+python3 huawei/tools/prepare_data.py --dataset vox --dataset_dir $data_dir/vox1_concat/test
+python3 huawei/tools/prepare_data.py --dataset vox --dataset_dir $data_dir/vox1_concat/dev
+python3 huawei/tools/prepare_data.py --dataset vox --dataset_dir $data_dir/vox2_concat/dev
+python3 huawei/tools/prepare_data.py --dataset vox --dataset_dir $data_dir/vox2_concat/test
+
+# 2.2 generate trials
+python3 huawei/tools/generate_voice_19_trial.py --orgin_trial $data_dir/voice19/v19-eval/sid_eval_lists_and_keys/eval-trial-keys.lst \
+                                          --new_trial $data_dir/voice19_eval.tsv --type eval
+python3 huawei/tools/generate_voice_19_trial.py --orgin_trial $data_dir/voice19/v19-dev/sid_dev_lists_and_keys/dev-trial-keys.lst \
+                                          --new_trial $data_dir/voice19_dev.tsv --type dev
+
+# 2.3 prepare augmentation data
+# copy simulate rip in to musan dir
+python3 huawei/tools/segment_musan.py --musan_dir path2musan --save_dir $data_dir/musan_segmented
+cp -r path2RIRS_NOISES/simulated_rirs $data_dir/musan_segmented
+
+# step 3 now you are ready to train pba
+# datadir should contain the following files:
+# * datadir/musan_segmented
+# * datadir/vox1_fixed/dev
+# * datadir/vox2_wav/dev
+# * datadir/vox2_wav/dev
+# * datadir/voice19_dev_trial.tsv
+
+mkdir pba_new
+rm -r pba_new/* # if you need to rerun it, you have to manually remove all file under pba_new
+# Lauch these two jobs at the same time
+# test using only two population
+python3 huawei/pba/pba_trainer.py --data_dir $data_dir --rank 0 --ws 2 --gpu_id 0 --proj pba_new
+python3 huawei/pba/pba_trainer.py --data_dir $data_dir --rank 1 --ws 2 --gpu_id 1 --proj pba_new
+
+
+# reproduce the result using x-vector
+#python3 huawei/pba/pba_trainer.py --data_dir $data_dir --rank 0 --ws 6 --gpu_id 0 --proj pba_new
+#python3 huawei/pba/pba_trainer.py --data_dir $data_dir --rank 1 --ws 6 --gpu_id 1 --proj pba_new
+#python3 huawei/pba/pba_trainer.py --data_dir $data_dir --rank 2 --ws 6 --gpu_id 0 --proj pba_new
+#python3 huawei/pba/pba_trainer.py --data_dir $data_dir --rank 3 --ws 6 --gpu_id 1 --proj pba_new
+#python3 huawei/pba/pba_trainer.py --data_dir $data_dir --rank 4 --ws 6 --gpu_id 0 --proj pba_new
+#python3 huawei/pba/pba_trainer.py --data_dir $data_dir --rank 5 --ws 6 --gpu_id 1 --proj pba_new

@@ -1,0 +1,5 @@
+This folder contains the codes that use population-based augmentation to generate augmented training
+data for training x-vector networks or DenseNets.
+
+The training and evaluation procedure can be found in run.sh.
+

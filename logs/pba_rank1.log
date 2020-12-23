@@ -1,0 +1,29 @@
+Namespace(data_dir='/home8a/mwmak/corpus', gpu_id=0, model='xvector', proj='pba_new', rank='1', ws=2)
+read_wav_info(): /home8a/mwmak/corpus/vox1_fixed/dev
+total session is 141695
+read_wav_info(): /home8a/mwmak/corpus/vox2_wav/dev
+total session is 1045355
+read_wav_info(): /home8a/mwmak/corpus/vox2_wav/test
+total session is 34705
+Xvector
+using xvector
+Running single_train()
+using sgd
+CosineAnnealingWarmRestarts
+read_wav_info(): /home8a/mwmak/corpus/vox1_fixed/dev
+total session is 141695
+read_wav_info(): /home8a/mwmak/corpus/vox2_wav/dev
+total session is 1045355
+read_wav_info(): /home8a/mwmak/corpus/vox2_wav/test
+total session is 34705
+Found 60000
+reverb_p is 0.19187659110477526
+overlap_p is 0.20423825764989048
+[*] Found 43637 noise files
+[*] Found 43637 noise files
+music_p is 0.5189197629733314
+[*] Found 31005 noise files
+[*] Found 31005 noise files
+noises_p is 0.31360298493846084
+[*] Found 930 noise files
+no feature

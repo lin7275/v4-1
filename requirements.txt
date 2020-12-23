@@ -1,0 +1,7 @@
+torchaudio
+wavfile
+pytorch >=1.4
+GPUtil
+python >= 3.7
+# you also need to have ffmpeg, sox in your linux
+# standard anaconda including h5py, pandas, sklearn, scipy etc
