@@ -300,14 +300,14 @@ class PBATrainer:
         # self.fbank = Fbank(40).cuda()
         # self.spec_aug = SpectrumAug(max_time_mask_len=self.aug_config["spec_aug_time_mask_size"],
         #                             max_freq_mask_len=self.aug_config["spec_aug_freq_mask_size"])
-        if hasattr(self.model, 'frame_layers'):
-            self.model.frame_layers[1].freq_masker.mask_param = self.aug_config["spec_aug_freq_mask_size"]
-            self.model.frame_layers[1].time_masker.time_param = self.aug_config["spec_aug_time_mask_size"]
-        elif hasattr(self.model, 'trans'):
-            self.model.trans[1].freq_masker.mask_param = self.aug_config["spec_aug_freq_mask_size"]
-            self.model.trans[1].time_masker.time_param = self.aug_config["spec_aug_time_mask_size"]
-        else:
-            print('no using spec aug')
+        # if hasattr(self.model, 'frame_layers'):
+        #     self.model.frame_layers[1].freq_masker.mask_param = self.aug_config["spec_aug_freq_mask_size"]
+        #     self.model.frame_layers[1].time_masker.time_param = self.aug_config["spec_aug_time_mask_size"]
+        # elif hasattr(self.model, 'trans'):
+        #     self.model.trans[1].freq_masker.mask_param = self.aug_config["spec_aug_freq_mask_size"]
+        #     self.model.trans[1].time_masker.time_param = self.aug_config["spec_aug_time_mask_size"]
+        # else:
+        #     print('no using spec aug')
             # raise ValueError
         dset = WavRandomSampleDataset(
             self.wav_dirs,
