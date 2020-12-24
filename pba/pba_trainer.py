@@ -786,7 +786,7 @@ if __name__ == "__main__":
     parser.add_argument('--rank', type=str, required=True)
     parser.add_argument('--ws', type=int, required=True)
     parser.add_argument('--gpu_id', type=int, required=True)
-    parser.add_argument('--model', choices=['xvector', 'densenet121_1d'], required=True)
+    parser.add_argument('--model', choices=['xvector', 'densenet121_1d', "resnet101"], required=True)
     args = parser.parse_args()
     print(args)
 
