@@ -43,12 +43,13 @@ def explore(aug_config_new):
     for key, item in aug_config_new.items():
         #ax_freq_mask_len=27, max_time_mask_len=100
         if key == "spec_aug":
-            if random.random() < 0.5:
-            # only doing resample for spec_aug
-            #     item['time_mask_size'] = int(np.random.choice([50, 80, 120, 150], p=[0.25, 0.25, 0.25, 0.25]))
+            pass
+            # if random.random() < 0.5:
+            # # only doing resample for spec_aug
+            # #     item['time_mask_size'] = int(np.random.choice([50, 80, 120, 150], p=[0.25, 0.25, 0.25, 0.25]))
+            # #     item['freq_mask_size'] = int(np.random.choice([10, 15, 20, 25], p=[0.25, 0.25, 0.25, 0.25]))
+            #     item['time_mask_size'] = int(np.random.choice([30, 50, 70, 80], p=[0.25, 0.25, 0.25, 0.25]))
             #     item['freq_mask_size'] = int(np.random.choice([10, 15, 20, 25], p=[0.25, 0.25, 0.25, 0.25]))
-                item['time_mask_size'] = int(np.random.choice([30, 50, 70, 80], p=[0.25, 0.25, 0.25, 0.25]))
-                item['freq_mask_size'] = int(np.random.choice([10, 15, 20, 25], p=[0.25, 0.25, 0.25, 0.25]))
         else:
             inc_p = float(np.random.choice([0.0, 0.1, 0.15, 0.2, 0.25], p=[0.2, 0.2, 0.2, 0.2, 0.2]))
             inc_snr = int(np.random.choice([2, 3, 4, 5, 6], p=[0.2, 0.2, 0.2, 0.2, 0.2]))

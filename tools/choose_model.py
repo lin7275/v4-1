@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch
 import math
 import torch.nn.functional as F
-
+from tools.split_resnet import resnet101
 
 class Bottleneck(nn.Module):
     def __init__(self, in_planes, growth_rate, activation='relu'):
@@ -226,6 +226,10 @@ def choose_model(model_config, embedding_layer=None):
         print('using densenet121_1d')
         model_config.pop('model')
         model = DenseNet(Bottleneck, [6, 12, 24, 16], **model_config)
+    elif model_config['model'] == 'resnet101':
+        print('using resnet101')
+        model_config.pop('model')
+        model = resnet101(**model_config)
     else:
         print(model_config['model'])
         raise NotImplementedError

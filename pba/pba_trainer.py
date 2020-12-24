@@ -307,7 +307,8 @@ class PBATrainer:
             self.model.trans[1].freq_masker.mask_param = self.aug_config["spec_aug_freq_mask_size"]
             self.model.trans[1].time_masker.time_param = self.aug_config["spec_aug_time_mask_size"]
         else:
-            raise ValueError
+            print('no using spec aug')
+            # raise ValueError
         dset = WavRandomSampleDataset(
             self.wav_dirs,
             # aug_config=self.aug_config,
@@ -710,6 +711,9 @@ def pba(rank, world_size, home, gpu_ids, proj_name, model, interval=40, start_ep
         model_config = {"model": 'densenet121_1d', 'growth_rate': 90,
                         "fbank_config": {"n_mels": 80},
                         "specaug_config": {"max_freq_mask_len": 5, "max_time_mask_len": 20}}
+    elif model == 'resnet101':
+        model_config = {"model": 'resnet101',
+                        "fbank_config": {"n_mels": 40}}
     else:
         raise NotImplementedError
     train_para = {
