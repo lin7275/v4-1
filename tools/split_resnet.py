@@ -243,8 +243,8 @@ class ResNet(nn.Module):
             raise ValueError(f"{pooling_config['pooling_layer']} not supported")
 
         # self.fc = nn.Linear(mfcc_dim//5*w_base*10*block.expansion, embedding_size)
-        # self.fc = nn.Linear(6144, embedding_size)
-        self.fc = nn.Linear(1536, embedding_size)
+        self.fc = nn.Linear(6144, embedding_size)
+        # self.fc = nn.Linear(1536, embedding_size)
 
         if self.loss == 'amsoftmax':
             print('using amsoftmax')
